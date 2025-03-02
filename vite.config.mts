@@ -48,6 +48,7 @@ export default defineConfig(({ mode }) => {
     server: {
       port: port,
       host: true,
+      allowedHosts: true,
       proxy: {
         ...proxyTargets,
       },

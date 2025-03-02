@@ -4,6 +4,7 @@ import { Cookies } from "react-cookie";
 import { api } from "../../api";
 import { getURL } from "../../helpers/constants";
 import { UseRequestProcessor } from "../../services/request-processor";
+import secureLocalStorage from "react-secure-storage";
 interface IRefreshAccessToken {
   access_token: string;
   refresh_token: string;
@@ -21,6 +22,7 @@ export const useRefreshAccessToken: useMutationFunctionType<
   async function refreshAccess(): Promise<IRefreshAccessToken> {
     const res = await api.post<IRefreshAccessToken>(`${getURL("REFRESH")}`);
     cookies.set(LANGFLOW_REFRESH_TOKEN, res.data.refresh_token, { path: "/" });
+    secureLocalStorage.setItem('lngflw_refreshToken',res.data.refresh_token)
 
     return res.data;
   }

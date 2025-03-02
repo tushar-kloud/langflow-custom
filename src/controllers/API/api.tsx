@@ -42,7 +42,8 @@ function ApiInterceptor() {
   useEffect(() => {
     const unregister = fetchIntercept.register({
       request: function (url, config) {
-        const accessToken = cookies.get(LANGFLOW_ACCESS_TOKEN);
+        // const accessToken = cookies.get(LANGFLOW_ACCESS_TOKEN);
+        const accessToken = secureLocalStorage.getItem('lngflw_accessToken')
         if (accessToken && !isAuthorizedURL(config?.url)) {
           config.headers["Authorization"] = `Bearer ${accessToken}`;
         }
@@ -75,7 +76,8 @@ function ApiInterceptor() {
 
             await tryToRenewAccessToken(error);
 
-            const accessToken = cookies.get(LANGFLOW_ACCESS_TOKEN);
+            // const accessToken = cookies.get(LANGFLOW_ACCESS_TOKEN);
+            const accessToken = secureLocalStorage.getItem('lngflw_accessToken')
             if (!accessToken && error?.config?.url?.includes("login")) {
               return Promise.reject(error);
             }
@@ -138,10 +140,15 @@ function ApiInterceptor() {
         const currentOrigin = window.location.origin;
         const requestUrl = new URL(config?.url as string, currentOrigin);
 
+        // const backendOrigin = import.meta.env.VITE_KLOUDSTAC_LANGFLOW_BACKEND_URL
+        // const requestUrl = new URL(config?.url as string, backendOrigin);
+
         const urlIsFromCurrentOrigin = requestUrl.origin === currentOrigin;
+        // const urlIsFromCurrentOrigin = requestUrl.origin === backendOrigin;
         if (urlIsFromCurrentOrigin) {
           for (const [key, value] of Object.entries(customHeaders)) {
             config.headers[key] = value;
+            config.headers["Authorization"] = `Bearer ${accessToken}`;
           }
         }
 
@@ -212,7 +219,8 @@ function ApiInterceptor() {
     const originalRequest = error.config as AxiosRequestConfig;
 
     try {
-      const accessToken = cookies.get(LANGFLOW_ACCESS_TOKEN);
+      // const accessToken = cookies.get(LANGFLOW_ACCESS_TOKEN);     
+      const accessToken = secureLocalStorage.getItem('lngflw_accessToken') 
       if (!accessToken) {
         throw new Error("Access token not found in cookies");
       }

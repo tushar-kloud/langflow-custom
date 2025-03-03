@@ -96,6 +96,7 @@ export default function TemplatesModal({
                     size="sm"
                     data-testid="blank-flow"
                     className="shrink-0"
+                    style={{ backgroundColor: '#5ABA47' }}
                   >
                     <ForwardedIconComponent
                       name="Plus"

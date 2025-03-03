@@ -25,6 +25,7 @@ export const EmptyFolder = ({ setOpenModal }: EmptyFolderProps) => {
           variant="default"
           onClick={() => setOpenModal(true)}
           id="new-project-btn"
+          style={{ backgroundColor: '#5ABA47' }}
         >
           <ForwardedIconComponent
             name="plus"

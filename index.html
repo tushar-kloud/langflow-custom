@@ -21,17 +21,59 @@
   <div style="width: 100vw; height: 100vh" id="root"></div>
   <script type="module" src="/src/index.tsx"></script>
   <script>
+
+    function handleLoginPath(){
+      if (window.location.pathname.startsWith("/login")) {
+        history.replaceState(null, "", "/login");
+      }
+    }
     // Listen for messages from the parent
     window.addEventListener("message", (event) => {
       // if (event.origin !== "http://localhost:3000") {
       //   return;
       // }
 
-      console.log("Message from parent:", event.data);
+      // if (event.data?.textFirst || event.data?.textSecond) {
+      //   setInputState((prev) => ({
+      //     ...prev,
+      //     username: event.data.textFirst || prev.username,
+      //     password: event.data.textSecond || prev.password,
+      //   }));
+      // }
 
-      // Respond to the parent
-      event.source.postMessage({ action: "acknowledge", data: "Message received!" }, event.origin);
+      const usernameField = document.querySelector("input[name='username']");
+      const passwordField = document.querySelector("input[name='password']");
+      if (usernameField && passwordField) {
+          usernameField.value = event.data.textFirst;
+          passwordField.value = event.data.textSecond;
+
+          // Dispatch input events to notify React of changes
+          usernameField.dispatchEvent(new Event('input', { bubbles: true }));
+          passwordField.dispatchEvent(new Event('input', { bubbles: true }));
+          
+          clearInterval(interval);
+        }
+
+      console.log('Message Object: ',event.data)
+      console.log('Name: ',event.data.textFirst)
+      console.log('Password: ',event.data.textSecond)
+
+      if (event.source) {
+        event.source.postMessage(
+          {
+            action: "acknowledge",
+            // data: `Received: ${event.data.textFirst} ${event.data.textSecond}`,
+            data: "Message received"
+          },
+          { targetOrigin: "*" },
+        );
+      }
+
+      handleLoginPath()
     });
+      // Respond to the parent
+    //   event.source.postMessage({ action: "acknowledge", data: "Message received!" }, event.origin);
+    // });
   </script>
 </body>
 

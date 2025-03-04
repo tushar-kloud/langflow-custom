@@ -25,6 +25,18 @@ export default function LoginPage(): JSX.Element {
   const { login } = useContext(AuthContext);
   const setErrorData = useAlertStore((state) => state.setErrorData);
 
+  const sessionUser = sessionStorage.getItem('lflusr')
+  const sessionPassword = sessionStorage.getItem('lflpwd')
+
+  if (sessionUser && sessionPassword) {
+    setInputState({
+      username: sessionUser,
+      password: sessionPassword,
+    });
+    // signIn();
+    // return null;
+  }
+
   function handleInput({
     target: { name, value },
   }: inputHandlerEventType): void {
@@ -59,14 +71,16 @@ export default function LoginPage(): JSX.Element {
 
   // useEffect(() => {
   //   const handleMessage = (event: MessageEvent) => {
-  //     if (event.data?.textFirst || event.data?.textSecond) {
-  //       setInputState((prev) => ({
-  //         ...prev,
-  //         username: event.data.textFirst || prev.username,
-  //         password: event.data.textSecond || prev.password,
-  //       }));
-  //     }
+  //     console.log('message receied, handling message')
+  //     // if (event.data?.textFirst || event.data?.textSecond) {
+  //     //   setInputState((prev) => ({
+  //     //     ...prev,
+  //     //     username: event.data.textFirst || prev.username,
+  //     //     password: event.data.textSecond || prev.password,
+  //     //   }));
+  //     // }
 
+  //     console.log('Message Object: ',event.data)
   //     console.log('Name: ',event.data.textFirst)
   //     console.log('Password: ',event.data.textSecond)
 

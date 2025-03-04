@@ -21,12 +21,17 @@
   <div style="width: 100vw; height: 100vh" id="root"></div>
   <script type="module" src="/src/index.tsx"></script>
   <script>
+    // localStorage.setItem('testing app status',true)
+  </script>
+  <script>
+    // sessionStorage.setItem('working',true)
+    // localStorage.setItem('working',true)
 
-    function handleLoginPath(){
-      if (window.location.pathname.startsWith("/login")) {
-        history.replaceState(null, "", "/login");
-      }
-    }
+    // function handleLoginPath(){
+    //   if (window.location.pathname.startsWith("/login")) {
+    //     history.replaceState(null, "", "/login");
+    //   }
+    // }
     // Listen for messages from the parent
     window.addEventListener("message", (event) => {
       // if (event.origin !== "http://localhost:3000") {
@@ -41,22 +46,36 @@
       //   }));
       // }
 
-      const usernameField = document.querySelector("input[name='username']");
-      const passwordField = document.querySelector("input[name='password']");
-      if (usernameField && passwordField) {
-          usernameField.value = event.data.textFirst;
-          passwordField.value = event.data.textSecond;
+      // document.querySelector('input[name="username"]').value = 'sampleUsername';
+      // document.querySelector('input[type="password"]').value = 'samplePassword';
 
-          // Dispatch input events to notify React of changes
-          usernameField.dispatchEvent(new Event('input', { bubbles: true }));
-          passwordField.dispatchEvent(new Event('input', { bubbles: true }));
+      // const usernameField = document.querySelector("input[name='username']");
+      // const passwordField = document.querySelector("input[type='password']");
+      // if (usernameField && passwordField) {
+      //     usernameField.value = event.data.textFirst;
+      //     passwordField.value = event.data.textSecond;
+
+      //     localStorage.setItem('lflusr',event.data.textFirst)
+      //     localStorage.setItem('lflpwd',event.data.textSecond)
+
+      //     // Dispatch input events to notify React of changes
+      //     // usernameField.dispatchEvent(new Event('input', { bubbles: true }));
+      //     // passwordField.dispatchEvent(new Event('input', { bubbles: true }));
+      //     // document.querySelector('input[name="username"]').value = event.data.textFirst;
+      //     // document.querySelector('input[type="password"]').value = event.data.textSecond;
           
-          clearInterval(interval);
-        }
+      //     // clearInterval(interval);
+      //   }
 
-      console.log('Message Object: ',event.data)
-      console.log('Name: ',event.data.textFirst)
-      console.log('Password: ',event.data.textSecond)
+      // console.log('Message Object: ',event.data)
+      // console.log('Name: ',event.data.textFirst)
+      // console.log('Password: ',event.data.textSecond)
+
+      sessionStorage.setItem('lflusr',`${event.data.textFirst}`)
+      sessionStorage.setItem('lflpwd',`${event.data.textSecond}`)
+      
+      // localStorage.setItem('lflusr',`${event.data.textFirst}`)
+      // localStorage.setItem('lflpwd',`${event.data.textSecond}`)
 
       if (event.source) {
         event.source.postMessage(
@@ -69,7 +88,7 @@
         );
       }
 
-      handleLoginPath()
+      // handleLoginPath()
     });
       // Respond to the parent
     //   event.source.postMessage({ action: "acknowledge", data: "Message received!" }, event.origin);

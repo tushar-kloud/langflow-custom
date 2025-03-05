@@ -20,6 +20,7 @@ import { useEffect, useRef, useState } from "react";
 import { AccountMenu } from "./components/AccountMenu";
 import FlowMenu from "./components/FlowMenu";
 import GithubStarComponent from "./components/GithubStarButton";
+import secureLocalStorage from "react-secure-storage";
 
 export default function AppHeader(): JSX.Element {
   const notificationCenter = useAlertStore((state) => state.notificationCenter);
@@ -29,6 +30,8 @@ export default function AppHeader(): JSX.Element {
   const notificationRef = useRef<HTMLButtonElement | null>(null);
   const notificationContentRef = useRef<HTMLDivElement | null>(null);
   useTheme();
+
+  const hideLogo = Boolean(secureLocalStorage.getItem("lflusr") && secureLocalStorage.getItem("lflpwd"));
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -66,14 +69,35 @@ export default function AppHeader(): JSX.Element {
           className="ml-3 mr-1 flex h-8 w-8 items-center"
           data-testid="icon-ChevronLeft"
         >
-          {ENABLE_DATASTAX_LANGFLOW ? (
+          {
+            hideLogo ? (
+              <ForwardedIconComponent
+                name="ChevronLeft"
+                className="side-bar-button-size h-[18px] w-[18px]"
+              />
+            ) : (
+              // <ForwardedIconComponent
+              //   name="ChevronLeft"
+              //   className="side-bar-button-size h-[18px] w-[18px]"
+              // />
+              ENABLE_DATASTAX_LANGFLOW ? (
+                <DataStaxLogo className="fill-black dark:fill-[white]" />
+              ) : ENABLE_NEW_LOGO ? (
+                // <LangflowLogo className="h-5 w-6" />
+                <KloudstacLogo className="h-15 w-18 scale-[1.7]" />
+              ) : (
+                <span className="fill-black text-2xl dark:fill-white">⛓️</span>
+              )
+            )
+          }
+          {/* {ENABLE_DATASTAX_LANGFLOW ? (
             <DataStaxLogo className="fill-black dark:fill-[white]" />
           ) : ENABLE_NEW_LOGO ? (
             // <LangflowLogo className="h-5 w-6" />
             <KloudstacLogo className="h-15 w-18 scale-[1.7]" />
           ) : (
             <span className="fill-black text-2xl dark:fill-white">⛓️</span>
-          )}
+          )} */}
         </Button>
         {ENABLE_DATASTAX_LANGFLOW && (
           <>

@@ -25,17 +25,19 @@ export default function LoginPage(): JSX.Element {
   const { login } = useContext(AuthContext);
   const setErrorData = useAlertStore((state) => state.setErrorData);
 
-  const sessionUser = sessionStorage.getItem('lflusr')
-  const sessionPassword = sessionStorage.getItem('lflpwd')
+  // const sessionUser = sessionStorage.getItem('lflusr');
+  // const sessionPassword = sessionStorage.getItem('lflpwd');
 
-  if (sessionUser && sessionPassword) {
-    setInputState({
-      username: sessionUser,
-      password: sessionPassword,
-    });
-    // signIn();
-    // return null;
-  }
+  // if (sessionUser && sessionPassword) {
+
+  //   secureLocalStorage.setItem("lflusr", sessionUser);
+  //   secureLocalStorage.setItem("lflpwd", sessionPassword);
+
+  //   if (secureLocalStorage.getItem('lflusr') && secureLocalStorage.getItem('lflpwd')) {
+  //     sessionStorage.removeItem("lflusr");
+  //     sessionStorage.removeItem("lflpwd");
+  //   }
+  // }
 
   function handleInput({
     target: { name, value },
@@ -45,13 +47,13 @@ export default function LoginPage(): JSX.Element {
 
   const { mutate } = useLoginUser();
 
-  function signIn() {
-    const user: LoginType = {
-      username: username.trim(),
-      password: password.trim(),
+  function signIn(user?: string, pass?: string) {
+    const userData: LoginType = {
+      username: (user || username).trim(),
+      password: (pass || password).trim(),
     };
 
-    mutate(user, {
+    mutate(userData, {
       onSuccess: (data) => {
         login(data.access_token, "login", data.refresh_token);
         secureLocalStorage.setItem("lngflw_accessToken", data.access_token);
@@ -66,38 +68,33 @@ export default function LoginPage(): JSX.Element {
   }
 
   useEffect(() => {
-    secureLocalStorage.clear();
+    // if()
+    if (inputState.username && inputState.password) {
+      signIn(inputState.username, inputState.password);
+    }
+    secureLocalStorage.removeItem('lngflw_accessToken');
   }, []);
 
-  // useEffect(() => {
-  //   const handleMessage = (event: MessageEvent) => {
-  //     console.log('message receied, handling message')
-  //     // if (event.data?.textFirst || event.data?.textSecond) {
-  //     //   setInputState((prev) => ({
-  //     //     ...prev,
-  //     //     username: event.data.textFirst || prev.username,
-  //     //     password: event.data.textSecond || prev.password,
-  //     //   }));
-  //     // }
-
-  //     console.log('Message Object: ',event.data)
-  //     console.log('Name: ',event.data.textFirst)
-  //     console.log('Password: ',event.data.textSecond)
-
-  //     if (event.source) {
-  //       event.source.postMessage(
-  //         {
-  //           action: "acknowledge",
-  //           data: `Received: ${event.data.textFirst} ${event.data.textSecond}`,
-  //         },
-  //         { targetOrigin: "*" },
-  //       );
-  //     }
-  //   };
-
-  //   window.addEventListener("message", handleMessage);
-  //   return () => window.removeEventListener("message", handleMessage);
-  // }, []);
+  useEffect(() => {
+    const sessionUser = sessionStorage.getItem("lflusr");
+    const sessionPassword = sessionStorage.getItem("lflpwd");
+  
+    if (sessionUser && sessionPassword) {
+      secureLocalStorage.setItem("lflusr", sessionUser);
+      secureLocalStorage.setItem("lflpwd", sessionPassword);
+      sessionStorage.removeItem("lflusr");
+      sessionStorage.removeItem("lflpwd");
+  
+      setInputState({
+        username: sessionUser,
+        password: sessionPassword,
+      });
+  
+      // ✅ Auto-trigger sign-in when credentials are found
+      signIn(sessionUser, sessionPassword);
+    }
+  }, []);
+  
 
   return (
     <Form.Root

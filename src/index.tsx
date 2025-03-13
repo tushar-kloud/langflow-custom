@@ -1,6 +1,6 @@
 import ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
-// import setupLocatorUI from "@locator/runtime"
+import setupLocatorUI from "@locator/runtime"
 
 import "./style/classes.css";
 // @ts-ignore
@@ -12,7 +12,7 @@ import "./style/applies.css";
 // @ts-ignore
 import App from "./App";
 
-// setupLocatorUI({adapter:'react'});
+setupLocatorUI({adapter:'react'});
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,

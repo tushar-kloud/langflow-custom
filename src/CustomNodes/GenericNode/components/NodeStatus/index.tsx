@@ -241,7 +241,11 @@ export default function NodeStatus({
             </Badge>
           )}
         </div>
-        <ShadTooltip content={getTooltipContent()}>
+        {/* <Button
+          style={{margin: "10px"}}
+          onClick={handleClickRun}
+        > */}
+          <ShadTooltip content={getTooltipContent()}>
           <div
             ref={divRef}
             className="button-run-bg hit-area-icon"
@@ -261,7 +265,8 @@ export default function NodeStatus({
               </Button>
             )}
           </div>
-        </ShadTooltip>
+          </ShadTooltip>
+        {/* </Button> */}
         {dismissAll && isOutdated && !isUserEdited && (
           <ShadTooltip content="Update component">
             <div

@@ -10,27 +10,29 @@ const useTheme = () => {
   }));
 
   const handleSystemTheme = () => {
-    if (typeof window !== "undefined") {
-      const systemDarkMode = window.matchMedia(
-        "(prefers-color-scheme: dark)",
-      ).matches;
-      setDark(systemDarkMode);
-    }
+    // if (typeof window !== "undefined") {
+    //   const systemDarkMode = window.matchMedia(
+    //     "(prefers-color-scheme: dark)",
+    //   ).matches;
+    //   setDark(systemDarkMode);
+    // }
   };
 
   useEffect(() => {
-    const themePreference = localStorage.getItem("themePreference");
-    if (themePreference === "light") {
-      setDark(false);
-      setSystemTheme(false);
-    } else if (themePreference === "dark") {
-      setDark(true);
-      setSystemTheme(false);
-    } else {
-      // Default to system theme
-      setSystemTheme(true);
-      handleSystemTheme();
-    }
+    // const themePreference = localStorage.getItem("themePreference");
+    // if (themePreference === "light") {
+    //   setDark(false);
+    //   setSystemTheme(false);
+    // } else if (themePreference === "dark") {
+    //   setDark(true);
+    //   setSystemTheme(false);
+    // } else {
+    //   // Default to system theme
+    //   setSystemTheme(true);
+    //   handleSystemTheme();
+    // }
+    setDark(false)
+    localStorage.setItem("themePreference", "light");
   }, []);
 
   useEffect(() => {

@@ -97,8 +97,10 @@ const ListComponent = ({ flowData }: { flowData: FlowType }) => {
           <div
             className={cn(
               `item-center flex justify-center rounded-lg p-3`,
-              swatchColors[swatchIndex],
+              // swatchColors[swatchIndex],
+              
             )}
+            style={{backgroundColor: '#64e88c'}}
           >
             <ForwardedIconComponent
               name={flowData?.icon || getIcon()}

@@ -89,7 +89,11 @@ const GridComponent = ({ flowData }: { flowData: FlowType }) => {
         }`}
       >
         <div className="flex w-full items-center gap-4">
-          <div className={cn(`flex rounded-lg p-3`, swatchColors[swatchIndex])}>
+          <div className={cn(`flex rounded-lg p-3`, 
+            // swatchColors[swatchIndex]
+            )}
+            style={{backgroundColor: '#64e88c'}}
+            >
             <ForwardedIconComponent
               name={getIcon()}
               aria-hidden="true"

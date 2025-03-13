@@ -57,6 +57,7 @@ const ButtonSendWrapper = ({
       className={buttonClasses}
       onClick={handleClick}
       unstyled
+      style={{backgroundColor: '#5ABA47'}}
       data-testid={showStopButton ? "button-stop" : "button-send"}
     >
       <Case condition={showStopButton}>

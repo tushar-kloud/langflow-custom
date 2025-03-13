@@ -1,5 +1,5 @@
 import LangflowLogo from "@/assets/LangflowLogo.svg?react";
-import KloudstacLogo from "@/assets/kloudstacLogo.svg?react";
+import KloudstacLogo from "@/assets/KloudstacLogo.svg?react";
 import ChainLogo from "@/assets/logo.svg?react";
 import { ENABLE_NEW_LOGO } from "@/customization/feature-flags";
 
